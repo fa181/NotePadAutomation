@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using AutoItX3Lib;
@@ -59,8 +59,13 @@ namespace Autoit
                     Console.WriteLine("Hello world message sent to the ,txt file in notepad.");
 
                     //Clicks on File menu and save as
-                    auto.WinMenuSelectItem("*Untitled - Notepad", "", "&File", "&Save");
+                    auto.WinMenuSelectItem("*Untitled - Notepad", "", "&File", "E&xit");
                     Console.WriteLine("Save button has been clicked.");
+
+                    // waiting for Save As menu
+                    auto.WinWaitActive("Notepad");
+                    //use exit to save as
+                    auto.ControlClick("Notepad", "&Save", "Button1");
 
                     // waiting for Save As menu
                     auto.WinWaitActive("Save As");
@@ -87,6 +92,7 @@ namespace Autoit
                     Console.WriteLine(File.Exists(path1 + "Untitled.txt") ? "File saved in desired path." : "File is not saved or not saved in desired path.");
 
                     //close notepad.
+                    System.Threading.Thread.Sleep(1000);
                     Process[] proc = Process.GetProcessesByName("Notepad");
                     proc[0].Kill();
                 }
